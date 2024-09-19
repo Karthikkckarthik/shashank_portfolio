@@ -74,9 +74,26 @@ function Header() {
             flexGrow: 1, 
             fontFamily: 'Playfair Display, serif', 
             fontWeight: 700,
-            background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            fontSize: '1.5rem',
+            color: 'white',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+            letterSpacing: '1px',
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: '-5px',
+              left: '0',
+              width: '100%',
+              height: '2px',
+              background: 'linear-gradient(90deg, transparent, #ffffff, transparent)',
+              transform: 'scaleX(0)',
+              transformOrigin: 'center',
+              transition: 'transform 0.3s ease-in-out',
+            },
+            '&:hover::after': {
+              transform: 'scaleX(1)',
+            },
           }}
         >
           Shashanka G
