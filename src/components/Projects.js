@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Typography, Paper, Box, Grid, Card, CardContent, IconButton, Chip } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 function Projects() {
@@ -50,122 +50,119 @@ function Projects() {
   ];
 
   const ProjectCard = ({ project }) => {
-    const [isFlipped, setIsFlipped] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        style={{ perspective: '1000px' }}
       >
-        <Box
+        <Card
           sx={{
-            width: '100%',
             height: 250,
             position: 'relative',
-            transition: 'transform 0.6s',
-            transformStyle: 'preserve-3d',
-            '&:hover': {
-              transform: 'rotateY(180deg)',
-            },
+            overflow: 'hidden',
+            cursor: 'pointer',
           }}
-          onMouseEnter={() => setIsFlipped(true)}
-          onMouseLeave={() => setIsFlipped(false)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           {/* Front of the card */}
-          <Card
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              backfaceVisibility: 'hidden',
-            }}
-          >
-            <CardContent>
-              <Typography 
-                variant="h6" 
-                component="div" 
-                gutterBottom
-                sx={{ 
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: 700,
-                  fontSize: '1.2rem',
-                  color: theme => theme.palette.primary.main,
-                }}
-              >
-                {project.name}
-              </Typography>
-              <Typography 
-                variant="body2" 
-                color="text.secondary"
-                sx={{ 
-                  fontFamily: "'Lato', sans-serif",
-                  fontSize: '0.9rem',
-                  lineHeight: 1.6,
-                }}
-              >
-                {project.description}
-              </Typography>
-            </CardContent>
-          </Card>
-
-          {/* Back of the card */}
-          <Card
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              backfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              padding: 2,
-            }}
-          >
+          <CardContent>
             <Typography 
               variant="h6" 
+              component="div" 
               gutterBottom
               sx={{ 
                 fontFamily: "'Poppins', sans-serif",
-                fontWeight: 600,
-                fontSize: '1.1rem',
-                color: theme => theme.palette.secondary.main,
+                fontWeight: 700,
+                fontSize: '1.2rem',
+                color: theme => theme.palette.primary.main,
               }}
             >
-              Technologies:
+              {project.name}
             </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-              {project.technologies.map((tech, index) => (
-                <Chip 
-                  key={index} 
-                  label={tech} 
-                  size="small"
-                  sx={{
-                    fontFamily: "'Roboto Mono', monospace",
-                    fontSize: '0.75rem',
-                    fontWeight: 500,
-                  }}
-                />
-              ))}
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <IconButton 
-                href={project.github} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                sx={{ 
-                  backgroundColor: 'primary.main',
-                  color: 'white',
-                  '&:hover': { backgroundColor: 'primary.dark' },
+            <Typography 
+              variant="body2" 
+              color="text.secondary"
+              sx={{ 
+                fontFamily: "'Lato', sans-serif",
+                fontSize: '0.9rem',
+                lineHeight: 1.6,
+              }}
+            >
+              {project.description}
+            </Typography>
+          </CardContent>
+
+          {/* Back of the card (Curtain effect) */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  padding: '16px',
                 }}
               >
-                <GitHubIcon />
-              </IconButton>
-            </Box>
-          </Card>
-        </Box>
+                <Box>
+                  <Typography 
+                    variant="h6" 
+                    gutterBottom
+                    sx={{ 
+                      fontFamily: "'Poppins', sans-serif",
+                      fontWeight: 600,
+                      fontSize: '1.1rem',
+                      color: theme => theme.palette.secondary.main,
+                    }}
+                  >
+                    Technologies:
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                    {project.technologies.map((tech, index) => (
+                      <Chip 
+                        key={index} 
+                        label={tech} 
+                        size="small"
+                        sx={{
+                          fontFamily: "'Roboto Mono', monospace",
+                          fontSize: '0.75rem',
+                          fontWeight: 500,
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <IconButton 
+                    href={project.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    sx={{ 
+                      backgroundColor: 'primary.main',
+                      color: 'white',
+                      '&:hover': { backgroundColor: 'primary.dark' },
+                    }}
+                  >
+                    <GitHubIcon />
+                  </IconButton>
+                </Box>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Card>
       </motion.div>
     );
   };

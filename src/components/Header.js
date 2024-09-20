@@ -54,6 +54,8 @@ function Header() {
         background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
         opacity: opacity,
         transition: 'all 0.3s ease-in-out',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
       }}
     >
       <Toolbar>
@@ -108,19 +110,26 @@ function Header() {
                     position: 'relative',
                     overflow: 'hidden',
                     color: 'white',
+                    padding: '8px 12px',
+                    borderRadius: '4px',
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      backdropFilter: 'blur(5px)',
+                    },
                     '&::after': {
                       content: '""',
                       position: 'absolute',
                       width: '0%',
                       height: '2px',
-                      bottom: '-4px',
+                      bottom: '0',
                       left: '50%',
                       transform: 'translateX(-50%)',
                       backgroundColor: theme.palette.secondary.main,
                       transition: 'width 0.3s ease-in-out',
                     },
                     '&:hover::after': {
-                      width: '100%',
+                      width: '80%',
                     },
                   }}
                   onClick={() => handleChange(index)}
