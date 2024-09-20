@@ -5,20 +5,36 @@ function Education() {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700 }}>
           Education
         </Typography>
         <List>
           <ListItem>
             <ListItemText
-              primary="B.E in Computer Science and Engineering"
-              secondary="BMSCE - 9.24 GPA"
+              primary={
+                <Typography variant="h6" sx={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}>
+                  B.E in Computer Science and Engineering
+                </Typography>
+              }
+              secondary={
+                <Typography variant="body1" sx={{ fontFamily: "'Lato', sans-serif" }}>
+                  BMSCE - 9.24 GPA
+                </Typography>
+              }
             />
           </ListItem>
           <ListItem>
             <ListItemText
-              primary="XII PCMC"
-              secondary="RVK-BSK - 92.6%"
+              primary={
+                <Typography variant="h6" sx={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}>
+                  XII PCMC
+                </Typography>
+              }
+              secondary={
+                <Typography variant="body1" sx={{ fontFamily: "'Lato', sans-serif" }}>
+                  RVK-BSK - 92.6%
+                </Typography>
+              }
             />
           </ListItem>
         </List>

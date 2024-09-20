@@ -17,7 +17,7 @@ function Contact() {
   return (
     <Container maxWidth="md" sx={{ mb: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700 }}>
           Contact Information
         </Typography>
         <Grid container spacing={2}>
@@ -62,7 +62,7 @@ function Contact() {
                       },
                     }}
                   >
-                    <Typography variant="body1">
+                    <Typography variant="body1" sx={{ fontFamily: "'Lato', sans-serif" }}>
                       {item.text}
                     </Typography>
                   </Link>

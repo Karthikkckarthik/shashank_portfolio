@@ -16,7 +16,7 @@ function Skills() {
 
   const SkillSection = ({ title, skills }) => (
     <Box sx={{ mb: 4 }}>
-      <Typography variant="h5" gutterBottom>{title}</Typography>
+      <Typography variant="h5" gutterBottom sx={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}>{title}</Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
         {skills.map((skill, index) => (
           <motion.div
@@ -25,7 +25,13 @@ function Skills() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Chip label={skill} />
+            <Chip 
+              label={skill} 
+              sx={{ 
+                fontFamily: "'Roboto Mono', monospace",
+                fontWeight: 500,
+              }}
+            />
           </motion.div>
         ))}
       </Box>
@@ -35,7 +41,7 @@ function Skills() {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700 }}>
           Skills
         </Typography>
         <Grid container spacing={3}>

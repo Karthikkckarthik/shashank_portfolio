@@ -29,7 +29,7 @@ function Experience() {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700 }}>
           Work Experience
         </Typography>
         <Grid container spacing={2}>
@@ -67,9 +67,9 @@ function ExperienceCard({ experience }) {
         }}
       >
         <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography variant="h6">{experience.company}</Typography>
-          <Typography variant="subtitle1">{experience.position}</Typography>
-          <Typography variant="body2" color="text.secondary">{experience.duration}</Typography>
+          <Typography variant="h6" sx={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}>{experience.company}</Typography>
+          <Typography variant="subtitle1" sx={{ fontFamily: "'Lato', sans-serif", fontWeight: 500 }}>{experience.position}</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "'Lato', sans-serif" }}>{experience.duration}</Typography>
         </Box>
         <AnimatePresence>
           {isHovered && (
@@ -94,7 +94,7 @@ function ExperienceCard({ experience }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.1 }}
                   >
-                    <Typography variant="body2" paragraph>{detail}</Typography>
+                    <Typography variant="body2" paragraph sx={{ fontFamily: "'Lato', sans-serif" }}>{detail}</Typography>
                   </motion.li>
                 ))}
               </ul>

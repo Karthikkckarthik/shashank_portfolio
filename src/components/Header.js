@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, useMediaQuery, useTheme, IconButton, Menu, MenuItem, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { motion } from 'framer-motion';
+import TouchRipple from '@mui/material/ButtonBase/TouchRipple';
 
 const sections = ['Summary', 'Experience', 'Projects', 'Skills', 'Education', 'Contact'];
 
@@ -18,7 +19,6 @@ function Header() {
       const offset = window.scrollY;
       if (offset > 50) {
         setIsScrolled(true);
-        // Calculate opacity based on scroll position
         const newOpacity = Math.max(0.7, 0.95 - (offset - 50) / 1000);
         setOpacity(newOpacity);
       } else {
@@ -26,76 +26,38 @@ function Header() {
         setOpacity(0.95);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleChange = (index) => {
-    setValue(index);
-    const element = document.getElementById(sections[index].toLowerCase());
+  const handleChange = (newValue) => {
+    setValue(newValue);
+    const element = document.getElementById(sections[newValue].toLowerCase());
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    handleClose();
   };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (index) => {
+  const handleClose = () => {
     setAnchorEl(null);
-    if (typeof index === 'number') {
-      handleChange(index);
-    }
   };
 
   return (
     <AppBar 
       position="fixed" 
-      sx={{
-        background: `linear-gradient(45deg, rgba(30,136,229,${opacity}), rgba(255,64,129,${opacity}))`,
+      sx={{ 
+        background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+        opacity: opacity,
         transition: 'all 0.3s ease-in-out',
-        boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none',
-        backdropFilter: 'blur(10px)',
       }}
     >
       <Toolbar>
-        <Typography 
-          variant="h6" 
-          component={motion.div}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          sx={{ 
-            flexGrow: 1, 
-            fontFamily: 'Playfair Display, serif', 
-            fontWeight: 700,
-            fontSize: '1.5rem',
-            color: 'white',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-            letterSpacing: '1px',
-            position: 'relative',
-            '&::after': {
-              content: '""',
-              position: 'absolute',
-              bottom: '-5px',
-              left: '0',
-              width: '100%',
-              height: '2px',
-              background: 'linear-gradient(90deg, transparent, #ffffff, transparent)',
-              transform: 'scaleX(0)',
-              transformOrigin: 'center',
-              transition: 'transform 0.3s ease-in-out',
-            },
-            '&:hover::after': {
-              transform: 'scaleX(1)',
-            },
-          }}
-        >
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Shashanka G
         </Typography>
         {isMobile ? (
@@ -121,10 +83,10 @@ function Header() {
                 horizontal: 'right',
               }}
               open={Boolean(anchorEl)}
-              onClose={() => handleClose()}
+              onClose={handleClose}
             >
               {sections.map((section, index) => (
-                <MenuItem key={section} onClick={() => handleClose(index)}>
+                <MenuItem key={section} onClick={() => handleChange(index)}>
                   {section}
                 </MenuItem>
               ))}
@@ -139,11 +101,12 @@ function Header() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Typography
-                  variant="button"
+                  component="div"
                   sx={{
-                    mx: 2,
+                    mx: 1,
                     cursor: 'pointer',
                     position: 'relative',
+                    overflow: 'hidden',
                     color: 'white',
                     '&::after': {
                       content: '""',
@@ -163,6 +126,7 @@ function Header() {
                   onClick={() => handleChange(index)}
                 >
                   {section}
+                  <TouchRipple />
                 </Typography>
               </motion.div>
             ))}
